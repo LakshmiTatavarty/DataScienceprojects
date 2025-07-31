@@ -6,6 +6,7 @@ This project aims to classify individuals as **Introverts (0)** or **Extroverts 
 
 The dataset was preprocessed and trained using **cross-validation** for robust performance estimation. The model is trained and evaluated using `xgboost.train()` and final predictions are generated for test data.
 
+This project is developed to participate in the kaggle competition - https://www.kaggle.com/competitions/playground-series-s5e7/overview 
 ---
 
 ## 📁 Files
