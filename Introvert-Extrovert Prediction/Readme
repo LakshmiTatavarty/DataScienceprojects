@@ -1,0 +1,115 @@
+# Personality Prediction: Introvert vs Extrovert
+
+## 📌 Overview
+
+This project aims to classify individuals as **Introverts (0)** or **Extroverts (1)** based on behavioral and demographic features using **XGBoost**, a powerful gradient boosting algorithm.
+
+The dataset was preprocessed and trained using **cross-validation** for robust performance estimation. The model is trained and evaluated using `xgboost.train()` and final predictions are generated for test data.
+
+This project is developed to participate in the kaggle competition - https://www.kaggle.com/competitions/playground-series-s5e7/overview 
+---
+
+## 📁 Files
+
+* `introvert-or-extrovert.ipynb`: Main notebook containing data loading, preprocessing, model training, and evaluation.
+* `submission.csv`: Final output file for submission with predicted personality labels.
+
+---
+
+## 🧠 Model Used
+
+* **XGBoost** Classifier
+* Trained with early stopping to avoid overfitting
+* Evaluation metric: **Accuracy**
+
+---
+
+## ⚙️ Steps Performed
+
+1. **Data Loading**: Read the training and test datasets.
+2. **Data Preprocessing**: Clean and prepare data (e.g., encoding, scaling if needed).
+3. **Cross-Validation**:
+
+   * KFold strategy used
+   * Train/Validation splits with accuracy measured per fold
+4. **Model Training**:
+
+   * Used `xgb.train()` on DMatrix
+   * Applied early stopping
+5. **Prediction**:
+
+   * Predictions generated for validation and test sets
+   * Final predictions saved as `submission.csv`
+
+---
+
+## 🧪 Sample Code Snippet
+
+```python
+# Cross-validation loop
+for fold, (train_idx, valid_idx) in enumerate(splitter.split(X, y)):
+    dtrain = xgb.DMatrix(X_train, label=y_train)
+    dvalid = xgb.DMatrix(X_valid, label=y_valid)
+
+    bst = xgb.train(
+        params=xgb_params,
+        dtrain=dtrain,
+        evals=[(dtrain, 'train'), (dvalid, 'valid')],
+        num_boost_round=5000,
+        early_stopping_rounds=50
+    )
+```
+
+---
+
+## 📊 Evaluation
+
+* Fold-wise accuracy printed
+* Final average accuracy calculated
+
+---
+
+## 📤 Submission Example
+
+```python
+dtest = xgb.DMatrix(X_test)
+preds = np.round(bst.predict(dtest)).astype(int)
+submission = pd.DataFrame({
+    'id': test_ids,
+    'personality': preds
+})
+submission.to_csv("submission.csv", index=False)
+```
+
+---
+
+## 🚀 Future Work
+
+* Hyperparameter tuning with GridSearchCV
+* Feature importance analysis
+* Experimenting with LightGBM or CatBoost
+* Add visualizations and data insights
+
+---
+
+## 📚 Tech Stack
+
+* Python 3
+* Pandas, NumPy
+* XGBoost
+* Scikit-learn
+
+---
+
+## 🤝 Contributing
+
+Feel free to fork the repo, open issues, or submit pull requests to improve the model, code, or documentation.
+
+---
+
+## 📬 Contact
+
+For questions or feedback, please reach out via GitHub or email.
+
+---
+
